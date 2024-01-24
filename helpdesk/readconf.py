@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-import ConfigParser
+import configparser
 from helpdesk.settings import COMMON_CONFIG_FILE
 
 class DBconfig:
@@ -11,7 +11,7 @@ class DBconfig:
     dbpass=None
     
     def __init__(self):
-        config=ConfigParser.ConfigParser()
+        config=configparser.ConfigParser()
         config.read(COMMON_CONFIG_FILE)
         section="DB"
         self.dbhost=config.get(section,"host")
@@ -43,7 +43,7 @@ class LDAPconfig:
     ldappass=None
     searchdn=None
     def __init__(self):
-        config=ConfigParser.ConfigParser()
+        config=configparser.ConfigParser()
         config.read(COMMON_CONFIG_FILE)
         section="LDAP"
         self.ldaphost=config.get(section,"host")
@@ -74,7 +74,7 @@ class LDAPconfig:
 class DjangoSettings:
     secret_key=None
     def __init__(self):
-        config=ConfigParser.ConfigParser()
+        config=configparser.ConfigParser()
         config.read(COMMON_CONFIG_FILE)
         section="DJANGO"
         self.secret_key=config.get(section,"secret_key")

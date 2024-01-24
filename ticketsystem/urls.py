@@ -1,10 +1,10 @@
-from django.conf.urls import patterns, include, url
-from django.contrib import admin
+from django.urls import path, re_path
+from ticketsystem.views import showticket, view_dashboard, createTicket, assignedtome, updateticket
 
-urlpatterns = patterns('ticketsystem.views',
-    url(r'^show/(?P<ticket_id>[0-9]+)', "showticket", name="showticket"),
-    url(r'^mytickets/', "view_dashboard", name="view_dashboard"),
-    url(r'^ticketcreate', 'createTicket', name='createTicket'),
-    url(r'^assigned', 'assignedtome', name='assignedtome'),
-    url(r'^update/(?P<ticket_id>[0-9]+)', 'updateticket', name='updateticket'),
-)
+urlpatterns = [
+    re_path(r'^show/(?P<ticket_id>[0-9]+)', showticket, name='showticket'),
+    path('mytickets/', view_dashboard, name='view_dashboard'),
+    path('ticketcreate/', createTicket, name='createTicket'),
+    path('assigned/', assignedtome, name='assignedtome'),
+    re_path(r'^update/(?P<ticket_id>[0-9]+)', updateticket, name='updateticket'),
+]

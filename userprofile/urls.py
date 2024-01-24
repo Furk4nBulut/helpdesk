@@ -1,6 +1,7 @@
-from django.conf.urls import patterns, url
+from django.urls import path
+from userprofile.views import loginview, logout
 
-urlpatterns = patterns('userprofile.views',
-    url(r'^login', 'loginview', name="loginview"),
-    url(r'^logout', 'logout', name="logout"),
-)
+urlpatterns = [
+    path('login/', loginview, name='loginview'),
+    path('logout/', logout, name='logout'),
+]

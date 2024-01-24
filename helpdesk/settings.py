@@ -13,15 +13,12 @@ import os
 COMMON_CONFIG_FILE='/opt/helpdesk.conf'
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
-from readconf import *
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.7/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-DJANGOSETTINGS=DjangoSettings()
-SECRET_KEY = DJANGOSETTINGS.getsecretkey()
-
+SECRET_KEY = 'django-insecure-v79mo3k!)w(aopfb+f!sb*)dxw3_94ld4)+8oy2g&e77=)=sl1'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
@@ -44,6 +41,31 @@ INSTALLED_APPS = (
     'userprofile',
     'ticketsystem',
 )
+TEMPLATES = [
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],  # Eğer templates klasörü farklı bir yerde ise, doğru yolu belirtin
+        'APP_DIRS': True,
+        'OPTIONS': {
+            'context_processors': [
+                'django.template.context_processors.debug',
+                'django.template.context_processors.request',
+                'django.contrib.auth.context_processors.auth',
+                'django.contrib.messages.context_processors.messages',
+            ],
+        },
+    },
+]
+# MIDDLEWARE kısmını kontrol edin
+MIDDLEWARE = [
+    'django.middleware.security.SecurityMiddleware',
+    'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.common.CommonMiddleware',
+    #'django.middleware.csrf.CsrfViewMiddleware',
+    'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'django.contrib.messages.middleware.MessageMiddleware',
+    'django.middleware.clickjacking.XFrameOptionsMiddleware',
+]
 
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -54,6 +76,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
 )
 
 ROOT_URLCONF = 'helpdesk.urls'
@@ -63,16 +86,16 @@ WSGI_APPLICATION = 'helpdesk.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/1.7/ref/settings/#databases
-DBCONF=DBconfig()
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': DBCONF.getdatabase(),
-        'USER': DBCONF.getdbuser(),
-	'PASSWORD': DBCONF.getdbpass(),
-        'HOST': DBCONF.getdbhost(),
-        'PORT': DBCONF.getdbport()
+        'ENGINE': 'mssql',
+        'NAME': 'ticketsystem',
+        'HOST': '(localdb)\\MSSQLLocalDB',
+        'PORT': '',
+        'OPTIONS': {
+            'driver': 'ODBC Driver 17 for SQL Server',
+        },
     }
 }
 
@@ -98,13 +121,16 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.7/howto/static-files/
 
+STATIC_ROOT=os.path.join(BASE_DIR, 'staticfiles')
 STATIC_URL = os.path.join(BASE_DIR, '/static/')
 STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, 'static'),
+    os.path.join(BASE_DIR, 'static/'),
 )
+
 
 TEMPLATE_DIRS = (
     os.path.join(BASE_DIR, 'templates/'),
+
 )
 
 #import ldap
@@ -195,3 +221,4 @@ LOGGING = {
 }
 
 SESSION_EXPIRE_AT_BROWSER_CLOSE=True
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'

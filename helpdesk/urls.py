@@ -1,9 +1,10 @@
-from django.conf.urls import patterns, include, url
+from django.urls import include, path, re_path
+from helpdesk.views import index
 from django.contrib import admin
 
-urlpatterns = patterns('helpdesk.views',
-    url(r'^$', "index", name="index"),
-    url(r'^accounts/', include('userprofile.urls')),
-    url(r'^admin/', include(admin.site.urls)),
-    url(r'^ticketsystem/', include('ticketsystem.urls')),
-)
+urlpatterns = [
+    path('', index, name='index'),
+    path('accounts/', include('userprofile.urls')),
+    path('admin/', admin.site.urls),
+    path('ticketsystem/', include('ticketsystem.urls')),
+]
